@@ -1,0 +1,70 @@
+<div class="container" fxLayout="row">
+        <div fxFlex="50%">
+            <mat-card class="mat-card">
+                <mat-card-header>
+                    <mat-card-title>{{ team.strLeague }} / {{ team.strTeam }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                        <mat-list>
+                            <mat-list-item>Formed year: {{ team.intFormedYear }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Manager: {{ team.strManager }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Stadium: {{ team.strStadium }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Capacity: {{ team.intStadiumCapacity }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Location: {{ team.strStadiumLocation }}</mat-list-item>
+                        </mat-list>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="mat-card">
+                    <mat-card-header>
+                        <mat-card-title>Description</mat-card-title>
+                    </mat-card-header>
+                <mat-card-content>
+                    <p>{{ team.strDescriptionEN }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    
+        <div fxFlex="50%">
+            <mat-card class="mat-card">
+                <mat-card-header>
+                    <mat-card-title>{{ players.length }} Player</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <table mat-table [dataSource]="players">
+                        <ng-container matColumnDef="idPlayer">
+                            <th mat-header-cell *matHeaderCellDef>Id</th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-button
+                                        [routerLink]="'/player/' + element.idPlayer">
+                                    {{ element.idPlayer }}
+                                </button>
+                            </td>
+                        </ng-container>
+                    
+                        <ng-container matColumnDef="strPlayer">
+                            <th mat-header-cell *matHeaderCellDef>Player</th>
+                            <td mat-cell *matCellDef="let element">{{ element.strPlayer }}</td>
+                        </ng-container>
+                    
+                        <ng-container matColumnDef="strPosition">
+                            <th mat-header-cell *matHeaderCellDef>Position</th>
+                            <td mat-cell *matCellDef="let element">{{ element.strPosition }}</td>
+                        </ng-container>
+                        
+                        <ng-container matColumnDef="dateBorn">
+                            <th mat-header-cell *matHeaderCellDef>Date born</th>
+                            <td mat-cell *matCellDef="let element">{{ element.dateBorn | date }}</td>
+                        </ng-container>
+                        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>

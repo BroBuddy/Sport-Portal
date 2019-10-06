@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-button
+                routerLink="/home">
+                Sport Portal
+        </button>
+        <button mat-button
+                routerLink="/league"
+                *ngIf="store.sport">
+                Leagues
+        </button>
+        <span class="header-spacer"></span>
+        <button mat-button
+                routerLink="/home"
+                *ngIf="store.sport">
+                {{ store.sport.strSport }}
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>

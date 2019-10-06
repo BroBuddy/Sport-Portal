@@ -1,0 +1,10 @@
+<div class="container" fxLayout="row wrap">
+    <div fxFlex="25%" *ngFor="let sport of sportsList;">
+        <mat-card class="mat-card">
+            <mat-card-header>
+                <mat-card-title>{{ sport.strSport }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image [src]="sport.strSportThumb" [alt]="sport.strSport" (click)="selectSport(sport)" />
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="container" fxLayout="row">
+    <div fxFlex="50%">
+        <mat-card class="mat-card">
+            <mat-card-header>
+                <mat-card-title>Leagues / {{ league.strLeague }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>Full name: {{ league.strLeagueAlternate }}</mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>Country: {{ league.strCountry }}</mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>Division: {{ league.strDivision }}</mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>Formed year: {{ league.intFormedYear }}</mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>Gender: {{ league.strGender }}</mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mat-card">
+                <mat-card-header>
+                    <mat-card-title>Description</mat-card-title>
+                </mat-card-header>
+            <mat-card-content>
+                <p>{{ league.strDescriptionEN }}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="50%">
+        <mat-card class="mat-card">
+            <mat-card-header>
+                <mat-card-title>{{ teams.length }} Teams</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <table mat-table [dataSource]="teams">
+                    <ng-container matColumnDef="idTeam">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-button
+                                    [routerLink]="'/team/' + element.idTeam">
+                                {{ element.idTeam }}
+                            </button>
+                        </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="strTeam">
+                        <th mat-header-cell *matHeaderCellDef>Team</th>
+                        <td mat-cell *matCellDef="let element">{{ element.strTeam }}</td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="strStadium">
+                        <th mat-header-cell *matHeaderCellDef>Stadium</th>
+                        <td mat-cell *matCellDef="let element">{{ element.strStadium }}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="strLeagueAlternate">
+                        <th mat-header-cell *matHeaderCellDef>Full name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.strLeagueAlternate }}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="intStadiumCapacity">
+                        <th mat-header-cell *matHeaderCellDef>Capacity</th>
+                        <td mat-cell *matCellDef="let element">{{ element.intStadiumCapacity }}</td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
