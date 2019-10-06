@@ -14,6 +14,8 @@ import { LeagueComponent } from './league/league.component';
 import { LeagueDetailComponent } from './league/league-detail/league-detail.component';
 import { TeamComponent } from './team/team.component';
 import { TeamDetailComponent } from './team/team-detail/team-detail.component';
+import { PlayerComponent } from './player/player.component';
+import { PlayerDetailComponent } from './player/player-detail/player-detail.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component';
     LeagueComponent,
     LeagueDetailComponent,
     TeamComponent,
-    TeamDetailComponent
+    TeamDetailComponent,
+    PlayerComponent,
+    PlayerDetailComponent
   ],
   imports: [
     BrowserModule,

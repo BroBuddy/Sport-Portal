@@ -1,0 +1,57 @@
+<div class="container" fxLayout="row">
+        <div fxFlex="30%">
+            <mat-card class="mat-card">
+                <mat-card-header>
+                    <mat-card-title>{{ player.strPlayer }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>Team: {{ player.strTeam }}</mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>Position: {{ player.strPosition }}</mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>Date born: {{ player.dateBorn | date }}</mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>Location: {{ player.strBirthLocation }}</mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>Nationality: {{ player.strNationality }}</mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>Gender: {{ player.strGender }}</mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="mat-card">
+                <mat-card-header>
+                    <mat-card-title>{{ honors.length }} Honors</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let honor of honors;">
+                            {{ honor.strHonour }}
+                            {{ honor.strSeason }}
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    
+        <div fxFlex="40%">
+            <mat-card>
+                <mat-card-content>
+                    <img [src]="player.strThumb" [alt]="player.strPlayer" [ngStyle]="{ 'max-width': '100%' }" />
+                </mat-card-content>
+            </mat-card>
+        </div>
+    
+        <div fxFlex="30%">
+            <mat-card class="mat-card">
+                    <mat-card-header>
+                        <mat-card-title>Description</mat-card-title>
+                    </mat-card-header>
+                <mat-card-content>
+                    <p>{{ player.strDescriptionEN }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>

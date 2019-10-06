@@ -6,14 +6,22 @@
         </button>
         <button mat-button
                 routerLink="/league"
-                *ngIf="store.sport">
+                [disabled]="!store.league">
                 Leagues
+        </button>
+        <button mat-button
+                routerLink="/team"
+                [disabled]="!store.country">
+                Teams
         </button>
         <span class="header-spacer"></span>
         <button mat-button
                 routerLink="/home"
-                *ngIf="store.sport">
-                {{ store.sport.strSport }}
+                *ngIf="store.league">
+                {{ store.league.strSport }}
+                <span *ngIf="store.country">
+                    {{ store.country.strCountry }}
+                </span>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>

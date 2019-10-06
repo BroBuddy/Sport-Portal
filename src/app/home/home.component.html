@@ -4,7 +4,10 @@
             <mat-card-header>
                 <mat-card-title>{{ sport.strSport }}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image [src]="sport.strSportThumb" [alt]="sport.strSport" (click)="selectSport(sport)" />
+            <img mat-card-image [src]="sport.strSportThumb"
+                                [alt]="sport.strSport"
+                                (click)="selectLeague(sport)"
+                                routerLink="/league" />
         </mat-card>
     </div>
 </div>

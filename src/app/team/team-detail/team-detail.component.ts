@@ -3,25 +3,26 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-team-detail',
-  templateUrl: './team-detail.component.html',
-  styleUrls: ['./team-detail.component.scss']
+  templateUrl: './team-detail.component.html'
 })
 export class TeamDetailComponent implements OnInit {
 
   public id: number;
   public team: any[] = [];
   public players: any[] = [];
+  public events: any[] = [];
   public displayedColumns: string[] = [
-    'idPlayer',
     'strPlayer',
     'strPosition',
     'dateBorn'
   ];
-  private teamUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=';
-  private playersUrl = 'https://www.thesportsdb.com/api/v1/json/1/lookup_all_players.php?id=';
+  private teamUrl = environment.apiUrl + '/lookupteam.php?id=';
+  private playersUrl = environment.apiUrl + '/lookup_all_players.php?id=';
+  private eventsUrl = environment.apiUrl + '/eventslast.php?id=';
 
   constructor(private route: ActivatedRoute,
               private http: HttpClient) { }
@@ -41,6 +42,10 @@ export class TeamDetailComponent implements OnInit {
     this.fetchPlayers().subscribe((data: any) => {
       this.players = data.player;
     });
+
+    this.fetchEvents().subscribe((data: any) => {
+      this.events = data.results;
+    });
   }
 
   fetchTeam(): Observable<any> {
@@ -49,6 +54,10 @@ export class TeamDetailComponent implements OnInit {
 
   fetchPlayers(): Observable<any> {
     return this.http.get(this.playersUrl += this.id);
+  }
+
+  fetchEvents(): Observable<any> {
+    return this.http.get(this.eventsUrl += this.id);
   }
 
 }

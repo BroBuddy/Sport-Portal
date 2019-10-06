@@ -5,9 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class StoreService {
 
-  public sport: any;
+  public league: any;
+  public country: any;
 
-  selectSport(data: any): void {
-    this.sport = data;
+  selectLeague(data: any): void {
+    this.league = data;
+  }
+
+  selectCountry(data: any): void {
+    this.country = data;
   }
 }

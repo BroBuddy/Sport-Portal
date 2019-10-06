@@ -3,15 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { StoreService } from '../shared/services/store.service';
 
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 
-  private apiUrl = 'https://www.thesportsdb.com/api/v1/json/1/all_sports.php';
+  private apiUrl = environment.apiUrl + '/all_sports.php';
   public sportsList: any[] = [];
 
   constructor(private http: HttpClient,
@@ -27,8 +27,9 @@ export class HomeComponent implements OnInit {
     return this.http.get(this.apiUrl);
   }
 
-  selectSport(sport: any): void {
-    this.store.selectSport(sport);
+  selectLeague(sport: any): void {
+    this.store.selectCountry(null);
+    this.store.selectLeague(sport);
   }
 
 }
