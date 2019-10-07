@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input'; 
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { GroupByPipe } from './pipes/groupBy.pipe';
@@ -24,6 +25,7 @@ const modules = [
     MatInputModule,
     MatListModule,
     MatTableModule,
+    MatTabsModule,
     MatToolbarModule
 ];
 

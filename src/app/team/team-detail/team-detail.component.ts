@@ -17,6 +17,7 @@ export class TeamDetailComponent implements OnInit {
   public team: any[] = [];
   public events: any[] = [];
   public displayedColumns: string[] = [
+    'strCutout',
     'strPlayer',
     'strPosition',
     'dateBorn'

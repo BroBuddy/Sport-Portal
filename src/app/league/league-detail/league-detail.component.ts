@@ -17,6 +17,7 @@ export class LeagueDetailComponent implements OnInit {
   public league: any[] = [];
   public seasons: any[] = [];
   public displayedColumns: string[] = [
+    'strTeamBadge',
     'strTeam',
     'strStadium',
     'intStadiumCapacity'

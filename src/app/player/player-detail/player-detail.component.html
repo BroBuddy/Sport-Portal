@@ -1,51 +1,59 @@
-<div class="container" fxLayout="row">
-        <div fxFlex="20%">
-            <mat-card class="mat-card">
-                <mat-card-header>
-                    <mat-card-title>{{ player.strPlayer }}</mat-card-title>
-                </mat-card-header>
-                <img mat-card-image [src]="player.strThumb"
-                                    [alt]="player.strPlayer" />
-                <mat-card-content>
-                    <mat-list>
-                        <mat-list-item>Team: {{ player.strTeam }}</mat-list-item>
-                        <mat-divider></mat-divider>
-                        <mat-list-item>Position: {{ player.strPosition }}</mat-list-item>
-                        <mat-divider></mat-divider>
-                        <mat-list-item>Date born: {{ player.dateBorn | date }}</mat-list-item>
-                        <mat-divider></mat-divider>
-                        <mat-list-item>Location: {{ player.strBirthLocation }}</mat-list-item>
-                        <mat-divider></mat-divider>
-                        <mat-list-item>Nationality: {{ player.strNationality }}</mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    
-        <div fxFlex="40%">
-            <mat-card class="mat-card">
-                    <mat-card-header>
-                        <mat-card-title>Description</mat-card-title>
-                    </mat-card-header>
-                <mat-card-content>
-                    <p>{{ player.strDescriptionEN }}</p>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    
-        <div fxFlex="40%">
-            <mat-card class="mat-card">
-                <mat-card-header>
-                    <mat-card-title>{{ honors.length }} Honors</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-chip-list>
-                        <mat-chip *ngFor="let honor of honors;">
-                            {{ honor.strHonour }}
-                            {{ honor.strSeason }}
-                        </mat-chip>
-                    </mat-chip-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
+<div class="container" fxLayout="row wrap">
+    <div fxFlex="20%">
+        <mat-card class="mat-card">
+            <mat-card-header>
+                <mat-card-title>{{ player.strPlayer }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image *ngIf="player.strThumb"
+                                [src]="player.strThumb"
+                                [alt]="player.strPlayer" />
+            <mat-card-actions>
+                <button mat-button
+                        color="primary"
+                        [routerLink]="'/team/' + player.idTeam">{{ player.strTeam }}</button>
+            </mat-card-actions>
+        </mat-card>
     </div>
+
+    <div fxFlex="80%">
+        <mat-card class="mat-card">
+            <mat-card-content>
+                <mat-tab-group animationDuration="0ms">
+                    <mat-tab label="Infos">
+                        <mat-list>
+                            <mat-list-item>Team: {{ player.strTeam }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Position: {{ player.strPosition }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item *ngIf="player.strHeight">Height: {{ player.strHeight }}</mat-list-item>
+                            <mat-divider *ngIf="player.strHeight"></mat-divider>
+                            <mat-list-item *ngIf="player.strWeight">Weight: {{ player.strWeight }}</mat-list-item>
+                            <mat-divider *ngIf="player.strWeight"></mat-divider>
+                            <mat-list-item>Date born: {{ player.dateBorn | date }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Location: {{ player.strBirthLocation }}</mat-list-item>
+                            <mat-divider></mat-divider>
+                            <mat-list-item>Nationality: {{ player.strNationality }}</mat-list-item>
+                        </mat-list>
+                    </mat-tab>
+
+                    <mat-tab label="Description">
+                        <p>{{ player.strDescriptionEN }}</p>
+                    </mat-tab>
+
+                    <mat-tab label="Honors"
+                                [disabled]="!honors">
+                        <br />
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let honor of honors;">
+                                {{ honor.strHonour }}
+                                {{ honor.strSeason }}
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-tab>
+                </mat-tab-group>
+                
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
