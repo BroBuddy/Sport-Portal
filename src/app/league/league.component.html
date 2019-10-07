@@ -2,15 +2,30 @@
     <div fxFlex="100%">
         <mat-card class="mat-card">
             <mat-card-header>
-                <mat-card-title>{{ leaguesList.length }} Leagues</mat-card-title>
+                <mat-card-title>Leagues</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <table mat-table [dataSource]="leaguesList">
+                <mat-form-field>
+                    <input matInput
+                           (keyup)="applyFilter($event.target.value)"
+                           placeholder="Filter" />
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="strBadge">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="element.strBadge">
+                                <img [src]="element.strBadge" alt="Badge" width="80" />
+                            </span>
+                        </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="strLeague">
-                        <th mat-header-cell *matHeaderCellDef>League</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>League</th>
                         <td mat-cell *matCellDef="let element">
                             <button mat-button
-                            color="primary"
+                                    color="primary"
                                     (click)="selectCountry(element)"
                                     [routerLink]="'/league/' + element.idLeague">
                                 {{ element.strLeague }}
@@ -19,23 +34,21 @@
                     </ng-container>
                 
                     <ng-container matColumnDef="strCountry">
-                        <th mat-header-cell *matHeaderCellDef>Country</th>
-                        <td mat-cell *matCellDef="let element">{{ element.strCountry }}</td>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+                        <td mat-cell *matCellDef="let element">
+                            <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + element.strCountry +'.png'" />
+                            {{ element.strCountry }}
+                        </td>
                     </ng-container>
                     
                     <ng-container matColumnDef="strLeagueAlternate">
-                        <th mat-header-cell *matHeaderCellDef>Full name</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
                         <td mat-cell *matCellDef="let element">{{ element.strLeagueAlternate }}</td>
                     </ng-container>
                     
                     <ng-container matColumnDef="intFormedYear">
-                        <th mat-header-cell *matHeaderCellDef>Formed year</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Formed year</th>
                         <td mat-cell *matCellDef="let element">{{ element.intFormedYear }}</td>
-                    </ng-container>
-                    
-                    <ng-container matColumnDef="strWebsite">
-                        <th mat-header-cell *matHeaderCellDef>Website</th>
-                        <td mat-cell *matCellDef="let element">{{ element.strWebsite }}</td>
                     </ng-container>
                     
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

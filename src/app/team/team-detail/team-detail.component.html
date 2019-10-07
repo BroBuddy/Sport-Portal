@@ -41,12 +41,18 @@
     <div fxFlex="40%">
         <mat-card class="mat-card">
             <mat-card-header>
-                <mat-card-title>{{ players.length }} Players</mat-card-title>
+                <mat-card-title>Players</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <table mat-table [dataSource]="players">                    
+                <mat-form-field>
+                    <input matInput
+                            (keyup)="applyFilter($event.target.value)"
+                            placeholder="Filter" />
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>                    
                     <ng-container matColumnDef="strPlayer">
-                        <th mat-header-cell *matHeaderCellDef>Player</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Player</th>
                         <td mat-cell *matCellDef="let element">
                             <button mat-button
                                     color="primary"
@@ -57,12 +63,12 @@
                     </ng-container>
                 
                     <ng-container matColumnDef="strPosition">
-                        <th mat-header-cell *matHeaderCellDef>Position</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Position</th>
                         <td mat-cell *matCellDef="let element">{{ element.strPosition }}</td>
                     </ng-container>
                     
                     <ng-container matColumnDef="dateBorn">
-                        <th mat-header-cell *matHeaderCellDef>Date born</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date born</th>
                         <td mat-cell *matCellDef="let element">{{ element.dateBorn | date }}</td>
                     </ng-container>
                     

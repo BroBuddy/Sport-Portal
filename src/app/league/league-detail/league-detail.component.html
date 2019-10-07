@@ -36,12 +36,18 @@
     <div fxFlex="40%">
         <mat-card class="mat-card">
             <mat-card-header>
-                <mat-card-title>{{ teams.length }} Teams</mat-card-title>
+                <mat-card-title>Teams</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <table mat-table [dataSource]="teams">                
+                <mat-form-field>
+                    <input matInput
+                            (keyup)="applyFilter($event.target.value)"
+                            placeholder="Filter" />
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>                
                     <ng-container matColumnDef="strTeam">
-                        <th mat-header-cell *matHeaderCellDef>Team</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Team</th>
                         <td mat-cell *matCellDef="let element">
                             <button mat-button
                                     color="primary"
@@ -52,17 +58,17 @@
                     </ng-container>
                 
                     <ng-container matColumnDef="strStadium">
-                        <th mat-header-cell *matHeaderCellDef>Stadium</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stadium</th>
                         <td mat-cell *matCellDef="let element">{{ element.strStadium }}</td>
                     </ng-container>
                     
                     <ng-container matColumnDef="strLeagueAlternate">
-                        <th mat-header-cell *matHeaderCellDef>Full name</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
                         <td mat-cell *matCellDef="let element">{{ element.strLeagueAlternate }}</td>
                     </ng-container>
                     
                     <ng-container matColumnDef="intStadiumCapacity">
-                        <th mat-header-cell *matHeaderCellDef>Capacity</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Capacity</th>
                         <td mat-cell *matCellDef="let element">{{ element.intStadiumCapacity }}</td>
                     </ng-container>
                     

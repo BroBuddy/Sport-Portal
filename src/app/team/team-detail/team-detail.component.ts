@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -13,16 +15,18 @@ export class TeamDetailComponent implements OnInit {
 
   public id: number;
   public team: any[] = [];
-  public players: any[] = [];
   public events: any[] = [];
   public displayedColumns: string[] = [
     'strPlayer',
     'strPosition',
     'dateBorn'
   ];
+  public dataSource: any;
   private teamUrl = environment.apiUrl + '/lookupteam.php?id=';
   private playersUrl = environment.apiUrl + '/lookup_all_players.php?id=';
   private eventsUrl = environment.apiUrl + '/eventslast.php?id=';
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private route: ActivatedRoute,
               private http: HttpClient) { }
@@ -40,7 +44,8 @@ export class TeamDetailComponent implements OnInit {
     });
 
     this.fetchPlayers().subscribe((data: any) => {
-      this.players = data.player;
+      this.dataSource = new MatTableDataSource(data.player);
+      this.dataSource.sort = this.sort;
     });
 
     this.fetchEvents().subscribe((data: any) => {
@@ -58,6 +63,10 @@ export class TeamDetailComponent implements OnInit {
 
   fetchEvents(): Observable<any> {
     return this.http.get(this.eventsUrl += this.id);
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

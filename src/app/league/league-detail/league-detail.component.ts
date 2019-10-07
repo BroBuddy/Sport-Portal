@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -13,16 +15,18 @@ export class LeagueDetailComponent implements OnInit {
 
   public id: number;
   public league: any[] = [];
-  public teams: any[] = [];
   public seasons: any[] = [];
   public displayedColumns: string[] = [
     'strTeam',
     'strStadium',
     'intStadiumCapacity'
   ];
+  public dataSource: any;
   private leagueUrl = environment.apiUrl + '/lookupleague.php?id=';
   private teamsUrl = environment.apiUrl + '/lookup_all_teams.php?id=';
   private seasonsUrl = environment.apiUrl + '/search_all_seasons.php?id=';
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private route: ActivatedRoute,
               private http: HttpClient) { }
@@ -40,7 +44,8 @@ export class LeagueDetailComponent implements OnInit {
     });
 
     this.fetchTeams().subscribe((data: any) => {
-      this.teams = data.teams;
+      this.dataSource = new MatTableDataSource(data.teams);
+      this.dataSource.sort = this.sort;
     });
 
     this.fetchSeasons().subscribe((data: any) => {
@@ -58,6 +63,10 @@ export class LeagueDetailComponent implements OnInit {
 
   fetchSeasons(): Observable<any> {
     return this.http.get(this.seasonsUrl += this.id);
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
