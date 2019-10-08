@@ -1,4 +1,6 @@
-<div class="container" fxLayout="row wrap">
+<div class="container"
+     fxLayout="row wrap"
+     *ngFor="let player of (player$ | async);">
     <div fxFlex="20%">
         <mat-card class="mat-card">
             <mat-card-header>
@@ -20,39 +22,77 @@
             <mat-card-content>
                 <mat-tab-group animationDuration="0ms">
                     <mat-tab label="Infos">
-                        <mat-list>
-                            <mat-list-item>Team: {{ player.strTeam }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Position: {{ player.strPosition }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item *ngIf="player.strHeight">Height: {{ player.strHeight }}</mat-list-item>
-                            <mat-divider *ngIf="player.strHeight"></mat-divider>
-                            <mat-list-item *ngIf="player.strWeight">Weight: {{ player.strWeight }}</mat-list-item>
-                            <mat-divider *ngIf="player.strWeight"></mat-divider>
-                            <mat-list-item>Date born: {{ player.dateBorn | date }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Location: {{ player.strBirthLocation }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Nationality: {{ player.strNationality }}</mat-list-item>
-                        </mat-list>
+                        <div class="container" fxLayout="row">
+                            <div fxFlex="50%">
+                                <mat-list>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Team">group</mat-icon>
+                                        &nbsp;{{ player.strTeam }}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Position">swap_horiz</mat-icon>
+                                        &nbsp;{{ player.strPosition }}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Location">room</mat-icon>
+                                        &nbsp;{{ player.strBirthLocation }}</mat-list-item>
+                                        <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Nationality">public</mat-icon>
+                                        &nbsp;{{ player.strNationality }}</mat-list-item>
+                                </mat-list>
+                            </div>
+
+                            <div fxFlex="50%">
+                                <mat-list>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Height">height</mat-icon>
+                                        &nbsp;{{ player.strHeight ? player.strHeight : 'n/a' }}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Weight">accessibility</mat-icon>
+                                        &nbsp;{{ player.strWeight ? player.strWeight : 'n/a' }}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Date born">calendar_today</mat-icon>
+                                        &nbsp;{{ player.dateBorn ? (player.dateBorn | date) : 'n/a' }}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <mat-icon color="primary"
+                                        matTooltip="Salary">attach_money</mat-icon>
+                                        &nbsp;{{ player.strSigning ? player.strSigning : 'n/a' }}</mat-list-item>
+                                </mat-list>
+                            </div>
+                        </div>
                     </mat-tab>
 
                     <mat-tab label="Description">
                         <p>{{ player.strDescriptionEN }}</p>
                     </mat-tab>
 
-                    <mat-tab label="Honors"
-                             [disabled]="!honors">
+                    <mat-tab [label]="honorsLength + ' Honors'"
+                             [disabled]="!honorsLength">
                         <br />
                         <mat-chip-list>
-                            <mat-chip *ngFor="let honor of honors;">
+                            <mat-chip *ngFor="let honor of (honors$ | async);">
                                 {{ honor.strHonour }}
                                 {{ honor.strSeason }}
                             </mat-chip>
                         </mat-chip-list>
                     </mat-tab>
                 </mat-tab-group>
-                
             </mat-card-content>
         </mat-card>
     </div>

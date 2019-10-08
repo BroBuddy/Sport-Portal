@@ -40,7 +40,6 @@ import { PlayerDetailComponent } from './player/player-detail/player-detail.comp
     FlexLayoutModule,
     SharedModule
   ],
-  providers: [],
   bootstrap: [
     AppComponent
   ]

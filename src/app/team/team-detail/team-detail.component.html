@@ -4,13 +4,13 @@
             <mat-card-header>
                 <mat-card-title>{{ team.strTeam }}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image *ngIf="team.strTeamLogo"
+            <img mat-card-image *ngIf="team?.strTeamLogo"
                                 [src]="team.strTeamLogo"
                                 [alt]="team.strTeam" />
             <mat-card-actions>
                 <button mat-button
                         color="primary"
-                        [routerLink]="'/league/' + team.idLeague">{{ team.strLeague }}</button>
+                        [routerLink]="'/league/' + team?.idLeague">{{ team.strLeague }}</button>
             </mat-card-actions>
         </mat-card>
     </div>
@@ -69,8 +69,8 @@
                                     <mat-divider></mat-divider>
                                     <mat-list-item>Formed year: {{ team.intFormedYear }}</mat-list-item>
                                     <mat-divider></mat-divider>
-                                    <mat-list-item *ngIf="team.strManager">Manager: {{ team.strManager }}</mat-list-item>
-                                    <mat-divider *ngIf="team.strManager"></mat-divider>
+                                    <mat-list-item>Manager: {{ team.strManager }}</mat-list-item>
+                                    <mat-divider></mat-divider>
                                     <mat-list-item>Stadium: {{ team.strStadium }}</mat-list-item>
                                     <mat-divider></mat-divider>
                                     <mat-list-item>Capacity: {{ team.intStadiumCapacity }}</mat-list-item>

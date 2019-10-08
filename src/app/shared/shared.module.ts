@@ -13,8 +13,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { GroupByPipe } from './pipes/groupBy.pipe';
+import { CommonModule } from '@angular/common';
 
 const modules = [
     MatAutocompleteModule,
@@ -30,7 +32,8 @@ const modules = [
     MatSlideToggleModule,
     MatTableModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
 ];
 
 @NgModule({
@@ -38,6 +41,7 @@ const modules = [
         GroupByPipe
     ],
     imports: [
+        CommonModule,
         modules
     ],
     exports: [

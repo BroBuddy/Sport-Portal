@@ -3,6 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { map, tap, toArray } from 'rxjs/operators';
+
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -12,8 +14,9 @@ import { environment } from '../../../environments/environment';
 export class PlayerDetailComponent implements OnInit {
 
   public id: number;
-  public player: any = null;
-  public honors: any = null;
+  public player$: Observable<any>;
+  public honors$: Observable<any>;
+  public honorsLength = 0;
   public displayedColumns: string[] = [
     'idTeam',
     'strTeam',
@@ -34,21 +37,24 @@ export class PlayerDetailComponent implements OnInit {
         }
       );
 
-    this.fetchPlayer().subscribe((data: any) => {
-      this.player = data.players[0];
-    });
-
-    this.fetchHonors().subscribe((data: any) => {
-      this.honors = data.honors;
-    });
+    this.fetchPlayer();
+    this.fetchHonor();
   }
 
-  fetchPlayer(): Observable<any> {
-    return this.http.get(this.playerUrl += this.id);
+  fetchPlayer(): void {
+    this.player$ = this.http.get(this.playerUrl += this.id)
+      .pipe(
+        map(res => res['players'][0]),
+        toArray()
+      );
   }
 
-  fetchHonors(): Observable<any> {
-    return this.http.get(this.honorsUrl += this.id);
+  fetchHonor(): void {
+    this.honors$ = this.http.get(this.honorsUrl += this.id)
+      .pipe(
+        map((res) => res['honors']),
+        tap(res => { this.honorsLength = Object.keys(res).length; })
+      );
   }
 
 }

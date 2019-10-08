@@ -7,12 +7,12 @@
         <button mat-button
                 routerLink="/league"
                 [disabled]="!store.league">
-                Leagues
+                {{ store.league ? store.league.strSport : 'Sport' }}
         </button>
         <button mat-button
                 routerLink="/team"
                 [disabled]="!store.country">
-                Teams
+                {{ store.country ? store.country.strCountry : 'Country' }}
         </button>
         <span class="header-spacer"></span>
         <button mat-button
