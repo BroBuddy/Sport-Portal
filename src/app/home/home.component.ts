@@ -19,8 +19,10 @@ export class HomeComponent implements OnInit {
   public myControl = new FormControl();
   public options: any[] = [];
   public filteredOptions: Observable<string[]>;
+  public searchToggle = new FormControl();
   private apiUrl = environment.apiUrl + '/all_sports.php';
   private searchTeamsUrl = environment.apiUrl + '/searchteams.php?t=';
+  private searchPlayersUrl = environment.apiUrl + '/searchplayers.php?p=';
 
   constructor(private http: HttpClient,
               private store: StoreService,
@@ -38,22 +40,29 @@ export class HomeComponent implements OnInit {
   }
 
   triggerSearchTeam(input: string): void {
-    this.fetchSearchTeams(input).subscribe((data: any) => {
+    const url = this.searchToggle.value ? this.searchPlayersUrl : this.searchTeamsUrl;
+
+    this.fetchSearchTeams(url + input).subscribe((data: any) => {
       this.options = [];
 
-      data.teams.forEach(item => {
+      const items = this.searchToggle.value ? data.player : data.teams;
+
+      items.forEach(item => {
         const element = {
-          id: item.idTeam,
-          name: item.strTeam
+          id: this.searchToggle.value ? item.idPlayer : item.idTeam,
+          name: this.searchToggle.value ? item.strPlayer : item.strTeam
         };
 
         this.options.push(element);
       });
+
+      console.log('-', this.options);
     });
   }
 
   selectTeam(id: number): void {
-    this.router.navigate(['/team/' + id]);
+    const folder = this.searchToggle.value ? 'player' : 'team';
+    this.router.navigate(['/' + folder + '/' + id]);
   }
 
   enterTeam(event: any): void {
@@ -71,7 +80,7 @@ export class HomeComponent implements OnInit {
   }
 
   fetchSearchTeams(input: string): Observable<any> {
-    return this.http.get(this.searchTeamsUrl + input);
+    return this.http.get(input);
   }
 
   selectLeague(sport: any): void {

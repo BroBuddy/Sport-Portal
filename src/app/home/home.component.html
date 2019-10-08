@@ -18,11 +18,15 @@
 
     <div fxFlex="20%">
         <mat-card class="mat-card">
+            <mat-card-header>
+                <mat-card-title>
+                    {{ searchToggle.value ? 'Player' : 'Team' }} search
+                </mat-card-title>
+            </mat-card-header>
             <mat-card-content>
                 <form novalidate>
                     <mat-form-field>
                         <input type="text"
-                            placeholder="Team search"
                             matInput
                             [formControl]="myControl"
                             [matAutocomplete]="auto"
@@ -37,6 +41,13 @@
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
+                    
+                    Team
+                    <mat-slide-toggle
+                        (click)="options = []"
+                        [formControl]="searchToggle">
+                    </mat-slide-toggle>
+                    Player
                 </form>
             </mat-card-content>
         </mat-card>
