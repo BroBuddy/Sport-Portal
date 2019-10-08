@@ -12,8 +12,8 @@ import { environment } from '../../../environments/environment';
 export class PlayerDetailComponent implements OnInit {
 
   public id: number;
-  public player: any[] = [];
-  public honors: any[] = [];
+  public player: any = null;
+  public honors: any = null;
   public displayedColumns: string[] = [
     'idTeam',
     'strTeam',

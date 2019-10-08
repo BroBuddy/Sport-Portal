@@ -26,8 +26,8 @@ export class LeagueComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private http: HttpClient,
-              private store: StoreService) { }
+  constructor(public store: StoreService,
+              private http: HttpClient) { }
 
   ngOnInit(): void {
     this.apiUrl += this.store.league.strSport;

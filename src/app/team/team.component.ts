@@ -22,8 +22,8 @@ export class TeamComponent implements OnInit {
   public teamsList: any[] = [];
   private apiUrl = environment.apiUrl + '/search_all_teams.php?s=';
 
-  constructor(private http: HttpClient,
-              private store: StoreService) { }
+  constructor(public store: StoreService,
+              private http: HttpClient) { }
 
   ngOnInit(): void {
     this.apiUrl += this.store.league.strSport + '&c=' + this.store.country.strCountry;
