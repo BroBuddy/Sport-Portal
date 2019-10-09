@@ -1,15 +1,25 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
         <button mat-button
+                routerLinkActive="mat-accent"
                 routerLink="/home">
-                Sport Portal
+                <mat-icon>home</mat-icon>
+                <span>Sport Portal</span>
         </button>
         <button mat-button
+                routerLinkActive="mat-accent"
+                routerLink="/search">
+                <mat-icon>search</mat-icon>
+                <span>Search</span>
+        </button>
+        <button mat-button
+                routerLinkActive="mat-accent"
                 routerLink="/league"
                 [disabled]="!store.league">
                 {{ store.league ? store.league.strSport : 'Sport' }}
         </button>
         <button mat-button
+                routerLinkActive="mat-accent"
                 routerLink="/team"
                 [disabled]="!store.country">
                 {{ store.country ? store.country.strCountry : 'Country' }}
@@ -19,10 +29,6 @@
                 routerLink="/home"
                 *ngIf="store.league">
                 <img [src]="'https://www.thesportsdb.com/images/icons/' + store.league.strSport + '.png'" />
-                {{ store.league.strSport }}
-                <span *ngIf="store.country">
-                    {{ store.country.strCountry }}
-                </span>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>

@@ -1,61 +1,27 @@
 <div class="container" fxLayout="row">
     <div fxFlex="100%">
-        <mat-card class="mat-card">
-            <mat-card-header>
-                <mat-card-title>{{ store.league.strSport }} > Leagues</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-form-field>
-                    <input matInput
-                           (keyup)="applyFilter($event.target.value)"
-                           placeholder="Filter" />
-                </mat-form-field>
-
-                <table mat-table [dataSource]="dataSource" matSort>
-                    <ng-container matColumnDef="strBadge">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Badge</th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.strBadge">
-                                <img [src]="element.strBadge" alt="Logo" width="30" />
-                            </span>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="strLeague">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>League</th>
-                        <td mat-cell *matCellDef="let element">
-                            <button mat-button
-                                    color="primary"
-                                    (click)="selectCountry(element)"
-                                    [routerLink]="'/league/' + element.idLeague">
-                                {{ element.strLeague }}
-                            </button>
-                        </td>
-                    </ng-container>
-                
-                    <ng-container matColumnDef="strCountry">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-                        <td mat-cell *matCellDef="let element">
-                            <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + element.strCountry +'.png'" />
-                            {{ element.strCountry }}
-                        </td>
-                    </ng-container>
-                    
-                    <ng-container matColumnDef="strLeagueAlternate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
-                        <td mat-cell *matCellDef="let element">{{ element.strLeagueAlternate }}</td>
-                    </ng-container>
-                    
-                    <ng-container matColumnDef="intFormedYear">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Formed year</th>
-                        <td mat-cell *matCellDef="let element">{{ element.intFormedYear }}</td>
-                    </ng-container>
-                    
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-            </mat-card-content>
-        </mat-card>
+        <mat-tab-group animationDuration="0ms">
+            <mat-tab *ngFor="let country of (leagues$ | async | groupBy:'strCountry');">
+                <ng-template mat-tab-label>
+                    <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
+                    [matTooltip]="country.key"
+                    alt="Logo" width="30" />
+                </ng-template>
+                <div class="container" fxLayout="row wrap">
+                    <div fxFlex="20%" *ngFor="let league of country.value;">
+                        <mat-card>
+                            <mat-card-header>
+                                <mat-card-title>
+                                    {{ league.strLeague }}
+                                </mat-card-title>
+                            </mat-card-header>
+                            <img mat-card-image [src]="league.strBadge ? league.strBadge : league.strLogo"
+                                                [alt]="league.strLeague" />
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>
 

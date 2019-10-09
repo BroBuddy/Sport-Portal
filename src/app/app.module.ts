@@ -17,6 +17,7 @@ import { TeamComponent } from './team/team.component';
 import { TeamDetailComponent } from './team/team-detail/team-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayerDetailComponent } from './player/player-detail/player-detail.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PlayerDetailComponent } from './player/player-detail/player-detail.comp
     TeamComponent,
     TeamDetailComponent,
     PlayerComponent,
-    PlayerDetailComponent
+    PlayerDetailComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
