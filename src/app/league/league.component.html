@@ -8,9 +8,14 @@
             </mat-card-header>
             <mat-card-content>
                 <mat-list>
+                    <button mat-button
+                    (click)="selectCountry('')"
+                    color="primary">
+                        All
+                    </button>
                     <ng-container *ngFor="let country of (leagues$ | async | groupBy:'strCountry'); let last = last;">
                         <button mat-button
-                        disabled
+                        (click)="selectCountry(country.key)"
                         color="primary">
                             <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
                             [matTooltip]="country.key"
@@ -28,22 +33,25 @@
             <mat-card-header>
                 <mat-card-title>
                     {{ store.league ? store.league.strSport : '' }} Leagues
+                    {{ selectedCountry ? (' in ' + selectedCountry) : '' }}
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <div class="container" fxLayout="row wrap">
-                    <div fxFlex="5%" *ngFor="let country of (leagues$ | async);"
-                    (click)="selectCountry(country)">
-                        <img *ngIf="country.strLogo || country.strBadge; else noImage"
-                        [matTooltip]="country.strLeague"
-                        [src]="country.strBadge ? country.strBadge : country.strLogo"
-                        [alt]="country.strLeague"
-                        width="100%" />
+                <ng-container *ngFor="let league of (leagues$ | async);">
+                    <button mat-button
+                    *ngIf="selectedCountry ? (league.strCountry === selectedCountry) : true"
+                    (click)="selectLeague(league)"
+                    color="primary">
+                        <img *ngIf="league.strLogo || league.strBadge; else noImage"
+                        [matTooltip]="league.strLeague"
+                        [src]="league.strBadge ? league.strBadge : league.strLogo"
+                        [alt]="league.strLeague"
+                        width="50" />
                         <ng-template #noImage>
-                            <p>{{ country.strLeague }}</p>
+                            <p>{{ league.strLeague }}</p>
                         </ng-template>
-                    </div>
-                </div>
+                    </button>
+                </ng-container>
             </mat-card-content>
         </mat-card>
     </div>

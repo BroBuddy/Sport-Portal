@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 
 import { StoreService } from '../shared/services/store.service';
 import { environment } from '../../environments/environment';
@@ -24,6 +22,7 @@ export class LeagueComponent implements OnInit {
     'strLeagueAlternate',
     'intFormedYear'
   ];
+  public selectedCountry: string;
   public leagues$: Observable<any>;
   private apiUrl = environment.apiUrl + '/search_all_leagues.php?s=';
 
@@ -34,19 +33,24 @@ export class LeagueComponent implements OnInit {
   ngOnInit(): void {
     this.apiUrl += this.store.league.strSport;
 
-    this.fetchLeagues();
+    this.leagues$ = this.fetchLeagues();
   }
 
-  fetchLeagues(): void {
-    this.leagues$ = this.http.get(this.apiUrl)
+  fetchLeagues(): Observable<any> {
+    return this.http.get(this.apiUrl)
       .pipe(
-        map(res => res['countrys'])
+        map(res => res['countrys']),
+        shareReplay(1)
       );
   }
 
   selectCountry(country: any): void {
-    this.store.selectCountry(country);
-    this.router.navigate(['/league/' + country.idLeague]);
+    this.selectedCountry = country;
+  }
+
+  selectLeague(league: any): void {
+    this.store.selectCountry(league.strCountry);
+    this.router.navigate(['/league/' + league.idLeague]);
   }
 
 }
