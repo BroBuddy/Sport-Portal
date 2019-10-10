@@ -1,27 +1,50 @@
-<div class="container" fxLayout="row">
+<div class="container" fxLayout="row wrap">
     <div fxFlex="100%">
-        <mat-tab-group animationDuration="0ms">
-            <mat-tab *ngFor="let country of (leagues$ | async | groupBy:'strCountry');">
-                <ng-template mat-tab-label>
-                    <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
-                    [matTooltip]="country.key"
-                    alt="Logo" width="30" />
-                </ng-template>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    Countries
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <ng-container *ngFor="let country of (leagues$ | async | groupBy:'strCountry'); let last = last;">
+                        <button mat-button
+                        disabled
+                        color="primary">
+                            <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
+                            [matTooltip]="country.key"
+                            alt="Logo"
+                            width="20" />
+                        </button>
+                    </ng-container>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="100%">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    {{ store.sport | json }} Leagues
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 <div class="container" fxLayout="row wrap">
-                    <div fxFlex="20%" *ngFor="let league of country.value;">
-                        <mat-card>
-                            <mat-card-header>
-                                <mat-card-title>
-                                    {{ league.strLeague }}
-                                </mat-card-title>
-                            </mat-card-header>
-                            <img mat-card-image [src]="league.strBadge ? league.strBadge : league.strLogo"
-                                                [alt]="league.strLeague" />
-                        </mat-card>
+                    <div fxFlex="5%" *ngFor="let country of (leagues$ | async);"
+                    (click)="selectCountry(country)">
+                        <img *ngIf="country.strLogo || country.strBadge; else noImage"
+                        [matTooltip]="country.strLeague"
+                        [src]="country.strBadge ? country.strBadge : country.strLogo"
+                        [alt]="country.strLeague"
+                        width="100%" />
+                        <ng-template #noImage>
+                            <p>{{ country.strLeague }}</p>
+                        </ng-template>
                     </div>
                 </div>
-            </mat-tab>
-        </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>
-

@@ -16,6 +16,9 @@
                 routerLinkActive="mat-accent"
                 routerLink="/league"
                 [disabled]="!store.league">
+                <img *ngIf="store.league"
+                [alt]="store.league.strSport"
+                [src]="'https://www.thesportsdb.com/images/icons/' + store.league.strSport + '.png'" />
                 {{ store.league ? store.league.strSport : 'Sport' }}
         </button>
         <button mat-button
@@ -25,10 +28,5 @@
                 {{ store.country ? store.country.strCountry : 'Country' }}
         </button>
         <span class="header-spacer"></span>
-        <button mat-button
-                routerLink="/home"
-                *ngIf="store.league">
-                <img [src]="'https://www.thesportsdb.com/images/icons/' + store.league.strSport + '.png'" />
-        </button>
     </mat-toolbar-row>
 </mat-toolbar>

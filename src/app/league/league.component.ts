@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 
 import { StoreService } from '../shared/services/store.service';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-league',
@@ -23,24 +24,17 @@ export class LeagueComponent implements OnInit {
     'strLeagueAlternate',
     'intFormedYear'
   ];
-  public dataSource: any;
   public leagues$: Observable<any>;
   private apiUrl = environment.apiUrl + '/search_all_leagues.php?s=';
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-
   constructor(public store: StoreService,
+              private router: Router,
               private http: HttpClient) { }
 
   ngOnInit(): void {
     this.apiUrl += this.store.league.strSport;
 
     this.fetchLeagues();
-
-    this.fetchData().subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data.countrys);
-      this.dataSource.sort = this.sort;
-    });
   }
 
   fetchLeagues(): void {
@@ -50,16 +44,9 @@ export class LeagueComponent implements OnInit {
       );
   }
 
-  fetchData(): Observable<any> {
-    return this.http.get(this.apiUrl);
-  }
-
   selectCountry(country: any): void {
     this.store.selectCountry(country);
-  }
-
-  applyFilter(filterValue: string): void {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.router.navigate(['/league/' + country.idLeague]);
   }
 
 }
