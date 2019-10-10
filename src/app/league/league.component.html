@@ -27,7 +27,7 @@
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
-                    {{ store.sport | json }} Leagues
+                    {{ store.league ? store.league.strSport : '' }} Leagues
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content>
