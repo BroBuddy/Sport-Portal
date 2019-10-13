@@ -14,6 +14,12 @@
         </button>
         <button mat-button
                 routerLinkActive="mat-accent"
+                routerLink="/event">
+                <mat-icon>event</mat-icon>
+                <span>Event</span>
+        </button>
+        <button mat-button
+                routerLinkActive="mat-accent"
                 routerLink="/league"
                 [disabled]="!store.league">
                 <img *ngIf="store.league"
@@ -25,7 +31,11 @@
                 routerLinkActive="mat-accent"
                 routerLink="/team"
                 [disabled]="!store.country">
-                {{ store.country ? store.country.strCountry : 'Country' }}
+                <img *ngIf="store.country"
+                [alt]="store.country"
+                [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + store.country +'.png'"
+                width="20" />
+                {{ store.country ? store.country : 'Country' }}
         </button>
         <span class="header-spacer"></span>
     </mat-toolbar-row>

@@ -26,7 +26,7 @@ export class TeamComponent implements OnInit {
               private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.apiUrl += this.store.league.strSport + '&c=' + this.store.country.strCountry;
+    this.apiUrl += this.store.league.strSport + '&c=' + this.store.country;
 
     this.fetchData().subscribe((data: any) => {
       this.teamsList = data.teams;
@@ -35,6 +35,10 @@ export class TeamComponent implements OnInit {
 
   fetchData(): Observable<any> {
     return this.http.get(this.apiUrl);
+  }
+
+  trackByFn(index): number {
+    return index;
   }
 
 }

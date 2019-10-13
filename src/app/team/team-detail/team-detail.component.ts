@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Observable } from 'rxjs';
+import { map, shareReplay, toArray } from 'rxjs/operators';
+
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -14,8 +16,8 @@ import { environment } from '../../../environments/environment';
 export class TeamDetailComponent implements OnInit {
 
   public id: number;
-  public team: any = null;
-  public events: any = null;
+  public team$: Observable<any>;
+  public events$: Observable<any>;
   public displayedColumns: string[] = [
     'strCutout',
     'strPlayer',
@@ -23,9 +25,6 @@ export class TeamDetailComponent implements OnInit {
     'dateBorn'
   ];
   public dataSource: any;
-  private teamUrl = environment.apiUrl + '/lookupteam.php?id=';
-  private playersUrl = environment.apiUrl + '/lookup_all_players.php?id=';
-  private eventsUrl = environment.apiUrl + '/eventslast.php?id=';
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -40,34 +39,41 @@ export class TeamDetailComponent implements OnInit {
         }
       );
 
-    this.fetchTeam().subscribe((data: any) => {
-      this.team = data.teams[0];
-    });
+    this.team$ = this.fetchTeam();
+    this.events$ = this.fetchEvents();
 
     this.fetchPlayers().subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(data.player);
       this.dataSource.sort = this.sort;
     });
-
-    this.fetchEvents().subscribe((data: any) => {
-      this.events = data.results;
-    });
   }
 
   fetchTeam(): Observable<any> {
-    return this.http.get(this.teamUrl += this.id);
-  }
-
-  fetchPlayers(): Observable<any> {
-    return this.http.get(this.playersUrl += this.id);
+    return this.http.get(environment.apiUrl + '/lookupteam.php?id=' + this.id)
+      .pipe(
+        map((res) => res['teams'][0]),
+        toArray()
+      );
   }
 
   fetchEvents(): Observable<any> {
-    return this.http.get(this.eventsUrl += this.id);
+    return this.http.get(environment.apiUrl + '/eventslast.php?id=' + this.id)
+      .pipe(
+        map((res) => res['results']),
+        shareReplay(1)
+      );
+  }
+
+  fetchPlayers(): Observable<any> {
+    return this.http.get(environment.apiUrl + '/lookup_all_players.php?id=' + this.id);
   }
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  trackByFn(index): number {
+    return index;
   }
 
 }

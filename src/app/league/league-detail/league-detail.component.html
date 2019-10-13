@@ -1,4 +1,6 @@
-<div class="container" fxLayout="row wrap">
+<div class="container"
+     fxLayout="row wrap"
+     *ngFor="let league of (league$ | async); trackBy: trackByFn;">
     <div fxFlex="20%">
         <mat-card class="mat-card">
             <mat-card-header>
@@ -7,90 +9,121 @@
             <img mat-card-image *ngIf="league.strBadge"
                                 [src]="league.strBadge"
                                 [alt]="league.strLeague" />
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon color="primary"
+                        matTooltip="Country">public</mat-icon>
+                        &nbsp;{{ league.strCountry ? league.strCountry : 'n/a' }}
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <mat-icon color="primary"
+                        matTooltip="Formed year">access_time</mat-icon>
+                        &nbsp;{{ league.intFormedYear ? league.intFormedYear : 'n/a' }}
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
         </mat-card>
     </div>
 
-    <div fxFlex="80%">
+    <div fxFlex="40%">
         <mat-card class="mat-card">
             <mat-card-content>
                 <mat-tab-group animationDuration="0ms">
-                    <mat-tab label="Teams">
-                        <br />
-                        <mat-form-field>
-                            <input matInput
-                                    (keyup)="applyFilter($event.target.value)"
-                                    placeholder="Filter" />
-                        </mat-form-field>
-        
-                        <table mat-table [dataSource]="dataSource" matSort>
-                            <ng-container matColumnDef="strTeamBadge">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Logo</th>
-                                <td mat-cell *matCellDef="let element">
-                                    <img *ngIf="element.strTeamBadge"
-                                         [src]="element.strTeamBadge"
-                                         alt="Logo" width="30" />
-                                </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="strTeam">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Team</th>
-                                <td mat-cell *matCellDef="let element">
-                                    <button mat-button
-                                            color="primary"
-                                            [routerLink]="'/team/' + element.idTeam">
-                                        {{ element.strTeam }}
-                                    </button>
-                                </td>
-                            </ng-container>
-                        
-                            <ng-container matColumnDef="strStadium">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Stadium</th>
-                                <td mat-cell *matCellDef="let element">{{ element.strStadium }}</td>
-                            </ng-container>
-                            
-                            <ng-container matColumnDef="strLeagueAlternate">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
-                                <td mat-cell *matCellDef="let element">{{ element.strLeagueAlternate }}</td>
-                            </ng-container>
-                            
-                            <ng-container matColumnDef="intStadiumCapacity">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Capacity</th>
-                                <td mat-cell *matCellDef="let element">{{ element.intStadiumCapacity }}</td>
-                            </ng-container>
-                            
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
+                    <mat-tab label="Last 15 Events">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let event of (events$ | async); trackBy: trackByFn;">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{ event.strEvent }}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                
+                                <button mat-button
+                                        disabled
+                                        color="accent">{{ event.dateEvent | date }}</button>
+                                <button mat-button
+                                        color="primary"
+                                        [routerLink]="'/team/' + event?.idHomeTeam">{{ event.strHomeTeam }}</button>
+                                <button mat-button
+                                        disabled
+                                        color="accent">{{ event.intHomeScore}} : {{ event.intAwayScore }}</button>
+                                <button mat-button
+                                        color="primary"
+                                        [routerLink]="'/team/' + event?.idAwayTeam">{{ event.strAwayTeam }}</button>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </mat-tab>
                     
-                    <mat-tab label="Infos">
-                        <mat-list>
-                            <mat-list-item>Name: {{ league.strLeagueAlternate }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Country: {{ league.strCountry }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Division: {{ league.strDivision }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Formed year: {{ league.intFormedYear }}</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Gender: {{ league.strGender }}</mat-list-item>
-                        </mat-list>
-                    </mat-tab>
-
                     <mat-tab label="Description">
                         <p>{{ league.strDescriptionEN }}</p>
                     </mat-tab>
-
-                    <mat-tab label="Seasons"
-                             [disabled]="!seasons">
+                    
+                    <mat-tab label="Seasons">
                         <br />
                         <mat-chip-list>
-                            <mat-chip *ngFor="let season of seasons;">
+                            <mat-chip *ngFor="let season of (seasons$ | async); trackBy: trackByFn;">
                                 {{ season.strSeason }}
                             </mat-chip>
                         </mat-chip-list>
                     </mat-tab>
                 </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="40%">
+        <mat-card class="mat-card">
+            <mat-card-header>
+                <mat-card-title>Teams</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field>
+                    <input matInput
+                            (keyup)="applyFilter($event.target.value)"
+                            placeholder="Filter" />
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="strTeamBadge">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>&nbsp;</th>
+                        <td mat-cell *matCellDef="let element">
+                            <img *ngIf="element.strTeamBadge"
+                                  [src]="element.strTeamBadge"
+                                  alt="Logo" width="30" />
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="strTeam">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Team</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-button
+                                    color="primary"
+                                    [routerLink]="'/team/' + element.idTeam">
+                                {{ element.strTeam }}
+                            </button>
+                        </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="strStadium">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stadium</th>
+                        <td mat-cell *matCellDef="let element">{{ element.strStadium }}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="strLeagueAlternate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
+                        <td mat-cell *matCellDef="let element">{{ element.strLeagueAlternate }}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="intStadiumCapacity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Capacity</th>
+                        <td mat-cell *matCellDef="let element">{{ element.intStadiumCapacity }}</td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
             </mat-card-content>
         </mat-card>
     </div>

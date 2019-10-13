@@ -9,6 +9,7 @@ import { TeamDetailComponent } from './team/team-detail/team-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayerDetailComponent } from './player/player-detail/player-detail.component';
 import { SearchComponent } from './search/search.component';
+import { EventComponent } from './event/event.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent
+  },
+  {
+    path: 'event',
+    component: EventComponent
   },
   {
     path: 'league',

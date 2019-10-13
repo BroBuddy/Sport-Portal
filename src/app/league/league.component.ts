@@ -46,10 +46,10 @@ export class LeagueComponent implements OnInit {
 
   selectCountry(country: any): void {
     this.selectedCountry = country;
+    this.store.selectCountry(country);
   }
 
   selectLeague(league: any): void {
-    this.store.selectCountry(league.strCountry);
     this.router.navigate(['/league/' + league.idLeague]);
   }
 

@@ -40,7 +40,6 @@
                 <ng-container *ngFor="let league of (leagues$ | async);">
                     <button mat-button
                     *ngIf="selectedCountry ? (league.strCountry === selectedCountry) : true"
-                    (click)="selectLeague(league)"
                     color="primary">
                         <img *ngIf="league.strLogo || league.strBadge; else noImage"
                         [matTooltip]="league.strLeague"
