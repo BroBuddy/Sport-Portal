@@ -12,15 +12,15 @@
                         <input type="text"
                             matInput
                             [formControl]="myControl"
-                            (keyup.enter)="enterEvent($event, 'team')"
-                            (input)="triggerEvent($event.target.value, 'team')" />
+                            (keyup.enter)="enterEvent($event)"
+                            (input)="triggerEvent($event.target.value)" />
                     </mat-form-field>
 
                     <mat-list *ngFor="let option of filteredOptions | async; let last = last;">
                         <mat-list-item>
                             <button mat-button
                             color="primary"
-                            (click)="selectOption(option.id, 'team')">
+                            (click)="selectOption(option.id)">
                                 <img [src]="option.logo" [alt]="option.name" width="30" />
                                 &nbsp;{{ option.name }}
                             </button>
