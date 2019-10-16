@@ -3,54 +3,39 @@
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
-                    Countries
+                    {{ this.store.league.strSport }} Leagues
                 </mat-card-title>
             </mat-card-header>
-            <mat-card-content>
-                <mat-list>
-                    <button mat-button
-                    (click)="selectCountry('')"
-                    color="primary">
-                        All
-                    </button>
-                    <ng-container *ngFor="let country of (leagues$ | async | groupBy:'strCountry'); let last = last;">
-                        <button mat-button
-                        (click)="selectCountry(country.key)"
-                        color="primary">
-                            <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
-                            [matTooltip]="country.key"
-                            alt="Logo"
-                            width="20" />
-                        </button>
-                    </ng-container>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-    </div>
 
-    <div fxFlex="100%">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>
-                    {{ store.league ? store.league.strSport : '' }} Leagues
-                    {{ selectedCountry ? (' in ' + selectedCountry) : '' }}
-                </mat-card-title>
-            </mat-card-header>
             <mat-card-content>
-                <ng-container *ngFor="let league of (leagues$ | async);">
-                    <button mat-button
-                    *ngIf="selectedCountry ? (league.strCountry === selectedCountry) : true"
-                    color="primary">
-                        <img *ngIf="league.strLogo || league.strBadge; else noImage"
-                        [matTooltip]="league.strLeague"
-                        [src]="league.strBadge ? league.strBadge : league.strLogo"
-                        [alt]="league.strLeague"
-                        width="50" />
-                        <ng-template #noImage>
-                            <p>{{ league.strLeague }}</p>
-                        </ng-template>
-                    </button>
-                </ng-container>
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let country of (leagues$ | async | groupBy:'strCountry'); trackBy: trackByFn;">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
+                                    alt="Logo"
+                                    width="20" />
+                                    {{ country.key }}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    
+                        <ng-container *ngFor="let league of country.value; trackBy: trackByFn;">
+                            <button mat-button
+                                [routerLink]="'/league/' + league.idLeague"
+                                (click)="selectCountry(league.strCountry)"
+                                color="primary">
+                                <img *ngIf="league.strLogo || league.strBadge; else noImage"
+                                    [matTooltip]="league.strLeague"
+                                    [src]="league.strBadge ? league.strBadge : league.strLogo"
+                                    [alt]="league.strLeague"
+                                    width="50" />
+                                <ng-template #noImage>
+                                    <p>{{ league.strLeague }}</p>
+                                </ng-template>
+                            </button>
+                        </ng-container>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </mat-card-content>
         </mat-card>
     </div>

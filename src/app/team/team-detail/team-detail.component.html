@@ -66,17 +66,17 @@
                         </mat-expansion-panel-header>
 
                         <button mat-button
-                                disabled
-                                color="accent">{{ event.dateEvent | date }}</button>
-                        <button mat-button
-                                color="primary"
+                                [color]="event.intHomeScore > event.intAwayScore ? 'primary' : 'warn'"
                                 [routerLink]="'/team/' + event?.idHomeTeam">{{ event.strHomeTeam }}</button>
                         <button mat-button
                                 disabled
                                 color="accent">{{ event.intHomeScore}} : {{ event.intAwayScore }}</button>
                         <button mat-button
-                                color="primary"
+                                [color]="event.intAwayScore > event.intHomeScore ? 'primary' : 'warn'"
                                 [routerLink]="'/team/' + event?.idAwayTeam">{{ event.strAwayTeam }}</button>
+                        <button mat-button
+                                disabled
+                                color="accent">{{ event.dateEvent | date }}</button>
                     </mat-expansion-panel>
                 </mat-accordion>
 

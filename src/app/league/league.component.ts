@@ -53,4 +53,8 @@ export class LeagueComponent implements OnInit {
     this.router.navigate(['/league/' + league.idLeague]);
   }
 
+  trackByFn(index): number {
+    return index;
+  }
+
 }

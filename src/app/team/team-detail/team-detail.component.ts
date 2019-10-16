@@ -36,16 +36,15 @@ export class TeamDetailComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = +params.id;
+          this.team$ = this.fetchTeam();
+          this.events$ = this.fetchEvents();
+
+          this.fetchPlayers().subscribe((data: any) => {
+            this.dataSource = new MatTableDataSource(data.player);
+            this.dataSource.sort = this.sort;
+          });
         }
       );
-
-    this.team$ = this.fetchTeam();
-    this.events$ = this.fetchEvents();
-
-    this.fetchPlayers().subscribe((data: any) => {
-      this.dataSource = new MatTableDataSource(data.player);
-      this.dataSource.sort = this.sort;
-    });
   }
 
   fetchTeam(): Observable<any> {
