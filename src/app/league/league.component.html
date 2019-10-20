@@ -27,7 +27,7 @@
                                 [routerLink]="'/league/' + league.idLeague"
                                 (click)="selectCountry(league.strCountry)"
                                 color="primary">
-                                <img *ngIf="league.strLogo || league.strBadge; else noImage"
+                                <img *ngIf="league.strLogo || league.strBadge"
                                     [src]="league.strBadge ? league.strBadge : league.strLogo"
                                     [alt]="league.strLeague"
                                     width="50" />
