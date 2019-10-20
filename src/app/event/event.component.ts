@@ -1,21 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html'
 })
-export class EventComponent implements OnInit {
-
-  public myControl = new FormControl();
-  public options: any[] = [];
-  public filteredOptions: Observable<string[]>;
+export class EventComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

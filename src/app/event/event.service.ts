@@ -7,24 +7,22 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class EventService {
 
   public data$: Observable<any>;
   public dataReady: boolean;
-  public category: string;
 
   constructor(private http: HttpClient) { }
 
-  fetchData(url: string, category: string): void {
+  fetchData(url: string): void {
     this.dataReady = false;
-    this.category = null;
 
     this.data$ = this.http.get(url)
       .pipe(
         map(res => Object.values(res)[0])
       );
 
-    this.category = category;
     this.dataReady = true;
   }
+
 }

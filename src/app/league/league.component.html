@@ -2,6 +2,9 @@
     <div fxFlex="100%">
         <mat-card>
             <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon color="primary">emoji_events</mat-icon>
+                </div>
                 <mat-card-title>
                     {{ this.store.league.strSport }} Leagues
                 </mat-card-title>
@@ -15,7 +18,7 @@
                                 <img [src]="'https://www.thesportsdb.com/images/icons/flags/shiny/16/' + country.key +'.png'"
                                     alt="Logo"
                                     width="20" />
-                                    {{ country.key }}
+                                &nbsp;{{ country.key }}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                     
@@ -25,13 +28,10 @@
                                 (click)="selectCountry(league.strCountry)"
                                 color="primary">
                                 <img *ngIf="league.strLogo || league.strBadge; else noImage"
-                                    [matTooltip]="league.strLeague"
                                     [src]="league.strBadge ? league.strBadge : league.strLogo"
                                     [alt]="league.strLeague"
                                     width="50" />
-                                <ng-template #noImage>
-                                    <p>{{ league.strLeague }}</p>
-                                </ng-template>
+                                {{ league.strLeague }}
                             </button>
                         </ng-container>
                     </mat-expansion-panel>

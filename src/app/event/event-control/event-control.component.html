@@ -1,0 +1,30 @@
+<mat-card class="mat-card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon color="primary">event</mat-icon>
+        </div>
+        <mat-card-title>
+            Event
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="eventForm"
+            novalidate
+            autocomplete="off">
+            <div class="container" fxLayout="column">
+                <div fxFlex="100%">                    
+                    <mat-form-field>
+                        <input matInput
+                            [matDatepicker]="eventDate"
+                            placeholder="Date"
+                            formControlName="date"
+                            (dateChange)="triggerEvent()">
+                        <mat-datepicker-toggle matSuffix
+                            [for]="eventDate"></mat-datepicker-toggle>
+                        <mat-datepicker #eventDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

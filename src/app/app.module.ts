@@ -21,6 +21,8 @@ import { SearchComponent } from './search/search.component';
 import { EventComponent } from './event/event.component';
 import { SearchControlComponent } from './search/search-control/search-control.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
+import { EventControlComponent } from './event/event-control/event-control.component';
+import { EventResultComponent } from './event/event-result/event-result.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
     SearchComponent,
     EventComponent,
     SearchControlComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    EventControlComponent,
+    EventResultComponent
   ],
   imports: [
     BrowserModule,

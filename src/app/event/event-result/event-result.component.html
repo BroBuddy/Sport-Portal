@@ -1,0 +1,56 @@
+<mat-card class="mat-card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon color="primary">list</mat-icon>
+        </div>
+        <mat-card-title>
+            Result
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-accordion *ngIf="eventService.dataReady; else dataNotReady;">
+            <mat-expansion-panel *ngFor="let sport of (eventService.data$ | async | groupBy:'strSport'); trackBy: trackByFn;">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <img [src]="'https://www.thesportsdb.com/images/icons/' + sport.key + '.png'"
+                            [alt]="sport.key" />
+                            &nbsp;{{ sport.key }} ({{ sport.value.length }})
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let item of sport.value; let last = last;">
+                        <div matLine>
+                            <button mat-button
+                                disabled>
+                                {{ item.strTime ? (item.strTime | slice:0:5) : '--:--' }}
+                            </button>
+                            <button mat-button
+                                [color]="item.intHomeScore > item.intAwayScore ? 'primary' : 'warn'"
+                                [routerLink]="'/team/' + item.idHomeTeam">
+                                {{ item.strHomeTeam ? item.strHomeTeam : 'n/a' }}
+                            </button>
+                            <button mat-button
+                                disabled>
+                                {{ item.intHomeScore }} : {{ item.intAwayScore }}
+                            </button>
+                            <button mat-button
+                                [color]="item.intAwayScore > item.intHomeScore ? 'primary' : 'warn'"
+                                [routerLink]="'/team/' + item.idAwayTeam">
+                                {{ item.strAwayTeam ? item.strAwayTeam : 'n/a' }}
+                            </button>
+                            <button mat-button
+                                disabled>
+                                {{ item.strLeague ? item.strLeague : 'n/a' }}
+                            </button>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <ng-template #dataNotReady>
+            Please select an event date!
+        </ng-template>
+    </mat-card-content>
+</mat-card>

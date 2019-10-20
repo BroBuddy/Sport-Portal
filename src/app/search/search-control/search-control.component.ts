@@ -13,7 +13,7 @@ export class SearchControlComponent implements OnInit {
   public searchForm: any;
   private searchUrl = environment.apiUrl;
 
-  constructor(public fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               private searchService: SearchService) { }
 
   ngOnInit() {
@@ -31,9 +31,11 @@ export class SearchControlComponent implements OnInit {
       const file = 'search' + category + '.php';
       const param = category.charAt(0);
       const url = this.searchUrl + '/' + file + '?' + param + '=' + input;
-      this.searchService.fetchSearch(url, category);
+      this.searchService.fetchData(url, category);
     } else {
       this.searchService.data$ = null;
+      this.searchService.category = null;
+      this.searchService.dataReady = false;
     }
   }
 

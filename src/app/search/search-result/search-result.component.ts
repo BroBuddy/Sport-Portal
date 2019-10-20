@@ -17,4 +17,8 @@ export class SearchResultComponent {
     this.router.navigate(['/' + category.slice(0, -1) + '/' + id]);
   }
 
+  trackByFn(index): number {
+    return index;
+  }
+
 }
