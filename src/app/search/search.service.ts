@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { map, toArray } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,26 +19,10 @@ export class SearchService {
     this.dataReady = false;
     this.category = null;
 
-    switch (category) {
-      case 'teams':
-        this.data$ = this.http.get(url)
-          .pipe(
-            map(res => res.teams)
-          );
-        break;
-      case 'players':
-        this.data$ = this.http.get(url)
-          .pipe(
-            map(res => res.player)
-          );
-        break;
-      case 'events':
-        this.data$ = this.http.get(url)
-          .pipe(
-            map(res => res.event)
-          );
-        break;
-    }
+    this.data$ = this.http.get(url)
+      .pipe(
+        map(res => Object.values(res)[0])
+      );
 
     this.category = category;
     this.dataReady = true;
