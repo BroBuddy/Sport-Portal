@@ -19,6 +19,8 @@ import { PlayerComponent } from './player/player.component';
 import { PlayerDetailComponent } from './player/player-detail/player-detail.component';
 import { SearchComponent } from './search/search.component';
 import { EventComponent } from './event/event.component';
+import { SearchControlComponent } from './search/search-control/search-control.component';
+import { SearchResultComponent } from './search/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { EventComponent } from './event/event.component';
     PlayerComponent,
     PlayerDetailComponent,
     SearchComponent,
-    EventComponent
+    EventComponent,
+    SearchControlComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,36 @@
+<mat-card class="mat-card">
+    <mat-card-header>
+        <mat-card-title>
+            Search
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="searchForm"
+                novalidate
+                autocomplete="off">
+            <div class="container" fxLayout="column">
+                <div fxFlex="100%">
+                    <mat-form-field>
+                        <mat-select placeholder="Select a category"
+                                    id="category"
+                                    formControlName="category">
+                            <mat-option value="teams">Teams</mat-option>
+                            <mat-option value="players">Players</mat-option>
+                            <mat-option value="events">Events</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            
+                <div fxFlex="100%">
+                    <mat-form-field>
+                        <input type="text"
+                                matInput
+                                id="input"
+                                formControlName="input"
+                                (input)="triggerSearch()" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,57 @@
+<mat-card class="mat-card">
+    <mat-card-header>
+        <mat-card-title>
+            Result {{ searchService.category ? (' of ') + searchService.category : null }} 
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <ng-container *ngIf="searchService.dataReady">
+            <mat-list *ngFor="let item of (searchService.data$ | async); let last = last;">
+                <mat-list-item>
+                    <div [ngSwitch]="searchService.category">
+                        <ng-container *ngSwitchCase="'teams'">
+                            <button mat-button
+                                color="primary"
+                                (click)="selectResult(item.idTeam)">
+                                <img [src]="'https://www.thesportsdb.com/images/icons/' + item.strSport + '.png'"
+                                    [alt]="item.strSport" />
+                                <img [src]="item.strTeamBadge ? item.strTeamBadge : 'https://www.thesportsdb.com/images/media/player/thumb/_none.png'"
+                                    [alt]="item.strTeam"
+                                    width="30" />
+                                &nbsp;{{ item.strTeam }} ({{ item.strLeague }})
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngSwitchCase="'players'">
+                            <button mat-button
+                                color="primary"
+                                (click)="selectResult(item.idPlayer)">
+                                <img [src]="'https://www.thesportsdb.com/images/icons/' + item.strSport + '.png'"
+                                    [alt]="item.strSport" />
+                                <img [src]="item.strThumb ? item.strThumb : 'https://www.thesportsdb.com/images/media/player/thumb/_none.png'"
+                                    [alt]="item.strPlayer"
+                                    width="30" />
+                                &nbsp;{{ item.strPlayer }} ({{ item.strTeam }})
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngSwitchCase="'events'">
+                            <button mat-button
+                                    disabled>
+                                {{ item.dateEvent | date }}
+                            </button>
+                            <button mat-button
+                                color="primary"
+                                (click)="selectResult(item.idEvent)">
+                                <img [src]="'https://www.thesportsdb.com/images/icons/' + item.strSport + '.png'"
+                                    [alt]="item.strSport" />
+                                &nbsp;{{ item.strEvent }} ({{ item.strLeague }})
+                            </button>
+                        </ng-container>
+                    </div>
+                </mat-list-item>
+                <mat-divider *ngIf="!last"></mat-divider>
+            </mat-list>
+        </ng-container>
+    </mat-card-content>
+</mat-card>

@@ -1,63 +1,10 @@
-<div class="container" fxLayout="row">
-    <div fxFlex="50%">
-        <mat-card class="mat-card">
-            <mat-card-header>
-                <mat-card-title>
-                    Team search
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form novalidate autocomplete="off">
-                    <mat-form-field>
-                        <input type="text"
-                            matInput
-                            [formControl]="myControl"
-                            (keyup.enter)="enterSearch($event, 'team')"
-                            (input)="triggerSearch($event.target.value, 'team')" />
-                    </mat-form-field>
-
-                    <mat-list *ngFor="let option of filteredOptions | async; let last = last;">
-                        <mat-list-item>
-                            <button mat-button
-                            color="primary"
-                            (click)="selectOption(option.id, 'team')">
-                                <img [src]="option.logo" [alt]="option.name" width="30" />
-                                &nbsp;{{ option.name }}
-                            </button>
-                        </mat-list-item>
-                        <mat-divider *ngIf="!last"></mat-divider>
-                    </mat-list>
-                </form>
-            </mat-card-content>
-        </mat-card>
+<div class="container"
+    fxLayout="row">
+    <div fxFlex="33%">
+        <app-search-control></app-search-control>
     </div>
 
-    <div fxFlex="50%">
-        <mat-card class="mat-card">
-            <mat-card-header>
-                <mat-card-title>
-                    Player search
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <!--form novalidate autocomplete="off">
-                    <mat-form-field>
-                        <input type="text"
-                            matInput
-                            [formControl]="myControl"
-                            (keyup.enter)="enterSearch($event, 'player')"
-                            (input)="triggerSearch($event.target.value, 'player')" />
-                    </mat-form-field>
-                    
-                    <div *ngFor="let option of filteredOptions | async"
-                    (click)="selectOption(option.id, 'player')">
-                        <img [src]="strTeamBadge" alt="" />
-                        {{ option.name }}
-                        {{ option.id }}
-                        {{ option.strSport }}
-                    </div>
-                </form-->
-            </mat-card-content>
-        </mat-card>
+    <div fxFlex="67%">
+        <app-search-result></app-search-result>
     </div>
 </div>
